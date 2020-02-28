@@ -1,0 +1,272 @@
+	.global main, Stop, CodeEnd
+	.global DataStart, DataEnd
+	.global Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10
+	.global ans_b, ans_s, ans_i, x, y, z
+
+main:
+
+
+//*************************************************************************
+// Write the assembler instruction at label Q1 that executes this
+// high level programming language statement: 
+//
+//      ans_b = 44;
+//
+// Do NOT forget to SKIP some space (or tab) before writing assembler code !!!
+//*************************************************************************
+Q1: 
+
+
+mov r0, #44
+movw r1, #:lower16:ans_b
+movt r1, #:upper16:ans_b
+strb r0, [r1]
+
+
+
+
+//*************************************************************************
+// Write the assembler instruction at label Q2 that executes this
+// high level programming language statement:
+//
+//      ans_s = -99;
+//
+// Do NOT forget to SKIP some space (or tab) before writing assembler code !!!
+//*************************************************************************
+Q2:
+
+mov r0, #-99
+movw r1, #:lower16:ans_s
+movt r1, #:upper16:ans_s
+strh r0, [r1]
+
+
+
+//*************************************************************************
+// Write the assembler instruction at label Q3 that executes this
+// high level programming language statement:
+//
+//      ans_i = 444;
+//
+// Do NOT forget to SKIP some space (or tab) before writing assembler code !!!
+//*************************************************************************
+Q3:
+
+mov r0, #444
+movw r1, #:lower16:ans_i
+movt r1, #:upper16:ans_i
+str r0, [r1]
+
+
+
+
+//*************************************************************************
+// Write the assembler instruction at label Q4 that executes this
+// high level programming language statement:
+//
+//      ans_b = x;
+//
+// Do NOT forget to SKIP some space (or tab) before writing assembler code !!!
+//*************************************************************************
+Q4:
+
+movw    r0, #:lower16:x         
+movt    r0, #:upper16:x         
+ldrsb   r1,[r0]
+
+movw    r0, #:lower16:ans_b         
+movt    r0, #:upper16:ans_b  
+strb r1, [r0]
+
+
+
+
+
+//*************************************************************************
+// Write the assembler instruction at label Q5 that executes this
+// high level programming language statement:
+//
+//      ans_s = x;
+//
+// Do NOT forget to SKIP some space (or tab) before writing assembler code !!!
+//*************************************************************************
+Q5:
+
+movw    r0, #:lower16:x         
+movt    r0, #:upper16:x         
+ldrsb   r1,[r0]
+
+movw    r0, #:lower16:ans_s         
+movt    r0, #:upper16:ans_s  
+strh r1, [r0]
+
+
+
+
+
+
+
+//*************************************************************************
+// Write the assembler instruction at label Q6 that executes this
+// high level programming language statement:
+//
+//      ans_i = x;
+//
+// Do NOT forget to SKIP some space (or tab) before writing assembler code !!!
+//*************************************************************************
+Q6:
+
+
+movw    r0, #:lower16:x         
+movt    r0, #:upper16:x         
+ldrsb   r1,[r0]
+
+movw    r0, #:lower16:ans_i         
+movt    r0, #:upper16:ans_i 
+str r1, [r0]
+
+
+
+
+
+
+//*************************************************************************
+// Write the assembler instruction at label Q7 that executes this
+// high level programming language statement:
+//
+//      ans_b = y;  (can you explain the difference in the stored value ?)
+//
+// Do NOT forget to SKIP some space (or tab) before writing assembler code !!!
+//*************************************************************************
+Q7:
+
+movw    r0, #:lower16:y         
+movt    r0, #:upper16:y         
+ldrsh   r1,[r0]
+
+movw    r0, #:lower16:ans_b         
+movt    r0, #:upper16:ans_b 
+strb r1, [r0]
+
+//Difference in store value occurs because you try to 
+//store a short in a byte which will inevitably have to have
+//values in the short cut off for the byte as the short is
+//bigger than the byte in using bits
+//see Q9 for more example explanation, what is important here is that int is larger
+//than byte, and that byte cannot encapsulate all the data of int
+
+
+
+
+//*************************************************************************
+// Write the assembler instruction at label Q8 that executes this
+// high level programming language statement:
+//
+//      ans_b = z;  (can you explain the difference in the stored value ?)
+//
+// Do NOT forget to SKIP some space (or tab) before writing assembler code !!!
+//*************************************************************************
+Q8:
+
+movw    r0, #:lower16:z         
+movt    r0, #:upper16:z         
+ldr   r1,[r0]
+
+movw    r0, #:lower16:ans_b         
+movt    r0, #:upper16:ans_b 
+strb r1, [r0]
+
+//cannot store an integer value in a byte without cutting
+//off values in the integer for the byte
+//the integer is much bigger in bits than the byte so the 
+//leftovers are cut-off
+//see Q9 for more example explanation; what is important here is byte is smaller
+//than int
+
+
+//*************************************************************************
+// Write the assembler instruction at label Q9 that executes this
+// high level programming language statement:
+//
+//      ans_s = z;  (can you explain the difference in the stored value ?)
+//
+// Do NOT forget to SKIP some space (or tab) before writing assembler code !!!
+//*************************************************************************
+Q9:
+
+movw    r0, #:lower16:z         
+movt    r0, #:upper16:z         
+ldr   r1,[r0]
+
+movw    r0, #:lower16:ans_s         
+movt    r0, #:upper16:ans_s 
+strh r1, [r0]
+
+//the difference in stored value comes from trying to use a short to load an integer
+//value, which has many more bigger possibilities than the short
+//specifically, the int is bigger than the short in how much data (bits)
+//it uses, which enables it to store bigger numbers
+//the short is limited, and if the value of z goes over the possibillity of
+//what ans_s can store (which it does), then ans_s will give out not the same value
+//this is also the case for any larger data and smaller data
+//so for example trying to store int in byte..etc.
+
+
+
+
+//*************************************************************************
+// Write the assembler instruction at label Q10 that executes this
+// high level programming language statement:
+//
+//      ans_i = y;
+//
+// Do NOT forget to SKIP some space (or tab) before writing assembler code !!!
+//*************************************************************************
+Q10:
+
+movw    r0, #:lower16:y         
+movt    r0, #:upper16:y         
+ldrsh   r1,[r0]
+
+movw    r0, #:lower16:ans_i         
+movt    r0, #:upper16:ans_i 
+str r1, [r0]
+
+
+
+Stop:	
+CodeEnd:
+	nop
+
+
+
+
+
+
+
+	.data
+DataStart:
+
+	.align  
+ans_b:  .skip 1
+
+	.align  
+ans_s:  .skip 2
+
+	.align  
+ans_i:  .skip 4
+
+
+	.align
+x:	.byte  -13
+
+
+	.align
+y:	.2byte  2057		// 2^11 + 9
+
+	.align
+z:	.4byte  147463		// 2^17 + 2^14 + 7
+
+
+DataEnd:
+	.end
